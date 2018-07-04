@@ -33,6 +33,7 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<MealWithExceed> listWithMeals = getFilteredWithExceeded(MealsUtil.MEALS, LocalTime.MIN, LocalTime.MAX, 2000);
 
+        request.setCharacterEncoding("utf-8");
         request.setAttribute("meals", listWithMeals);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/meals.jsp");
         if (dispatcher != null) {
