@@ -6,21 +6,17 @@ import ru.javawebinar.topjava.service.ServiceImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.service.Service;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.beans.IndexedPropertyChangeEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Objects;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import static ru.javawebinar.topjava.util.MealsUtil.getFilteredWithExceeded;
 
 /**
  * Created by Joanna Pakosh on Июль, 2018
@@ -44,7 +40,7 @@ public class MealServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         String id = request.getParameter("id");
-        Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
+        Meal meal = new Meal(id.isEmpty() ? null : Integer.parseInt(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
@@ -54,29 +50,29 @@ public class MealServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
-            ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         log.info("All meals");
 
-        request.setAttribute("meals", MealsUtil.getFilteredWithExceeded(service.getAll(), LocalTime.MIN, LocalTime.MAX, MealsUtil.CALORIES_PER_DAY));
-        request.getRequestDispatcher("/meals.jsp").forward(request, response);
         String crudAction = request.getParameter("action");
 
-        switch (crudAction) {
+        switch (crudAction == null ? "all" : crudAction) {
             case "delete":
                 int id = getId(request);
                 log.info("Delete : " + id);
                 service.delete(id);
+                response.sendRedirect("meals");
                 break;
             case "add":
             case "edit":
                 final Meal meal = "add".equalsIgnoreCase(crudAction) ?
-                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
+                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 0) :
                         service.get(getId(request));
+
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/meals_form.jsp").forward(request, response);
                 break;
+            case "all":
             default:
                 log.info("All meals");
                 request.setAttribute("meals", MealsUtil.getFilteredWithExceeded(service.getAll(), LocalTime.MIN, LocalTime.MAX, MealsUtil.CALORIES_PER_DAY));
@@ -86,9 +82,8 @@ public class MealServlet extends HttpServlet {
     }
 
     private int getId(HttpServletRequest request) {
-        String id = Objects.requireNonNull(request.getParameter("id"));
-        return Integer.parseInt(id);
-        }
+        return Integer.parseInt(request.getParameter("id"));
     }
+}
 
 

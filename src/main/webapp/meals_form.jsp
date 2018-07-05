@@ -6,14 +6,15 @@
   Time: 20:33
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Title</title>
 </head>
-<link rel="stylesheet" type="text/css" href="meals_form_style.css">
 <body>
 <h1><a href="index.html">Home</a></h1>
+<h2>${param.action == 'add' ? 'Add' : 'Edit'}</h2>
+
 <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
 <form method="post" action="meals">
     <table border="1" cellpadding="5">
