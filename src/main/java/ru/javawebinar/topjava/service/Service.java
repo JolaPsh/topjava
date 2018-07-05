@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.service;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Joanna Pakosh on Июль, 2018
@@ -12,8 +13,8 @@ public interface Service {
 
     void delete(int id);
 
-    Collection<Meal> getAll();
+    List<Meal> getAll();
 
-    void edit(int id);
+    Meal get(int id);
 }
 

@@ -1,20 +1,32 @@
 package ru.javawebinar.topjava.service;
 
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Joanna Pakosh on Июль, 2018
  */
 public class ServiceImpl implements Service {
-    Map<Integer, Meal> mapWithMeals = new HashMap<>();
+    private Map<Integer, Meal> mapWithMeals = new ConcurrentHashMap<>();
+    private AtomicInteger counter = new AtomicInteger(0);
+
+    {
+        MealsUtil.MEAL_LIST.forEach(this::save);
+    }
 
     @Override
     public Meal save(Meal meal) {
-        return mapWithMeals.put(meal.getId(), meal);
+        if (meal.isNew()) {
+            meal.setId(counter.getAndIncrement());
+            mapWithMeals.put(meal.getId(), meal);
+        }
+        return meal;
     }
 
     @Override
@@ -23,12 +35,12 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public Collection<Meal> getAll() {
-        return mapWithMeals.values();
+    public List<Meal> getAll() {
+        return new ArrayList<>(mapWithMeals.values());
     }
 
     @Override
-    public void edit(int id) {
-        //dopisac
+    public Meal get(int id) {
+        return mapWithMeals.get(id);
     }
 }

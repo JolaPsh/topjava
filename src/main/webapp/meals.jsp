@@ -16,9 +16,10 @@
 <%--<jsp:include page="userform.html"></jsp:include>--%>
 
 <body>
-<h3><a href="index.html">Home</a></h3>
+<h1><a href="index.html">Home</a></h1>
 <h2>Meals</h2>
 
+<a href="meals?action=add">Add </a>
 <table>
     <thead>
     <tr>
@@ -36,17 +37,13 @@
         </td>
         <td><c:out value="${meal.description}"/></td>
         <td><c:out value="${meal.calories}"/></td>
-        <td><a href="/meals_form.html?id=<c:out value='${meal.id}' />">Edit</a>
+        <td><a href="meals?action=edit?id=${meal.id}">Edit</a>
             &nbsp; / &nbsp;
-            <a href="/meals_form.html?id=<c:out value='${meal.id}' />">Delete</a></td>
+            <a href="meals?action=delete&id=${meal.id}">Delete</a></td>
     </tr>
     </c:forEach>
     <tbody>
 </table>
-
-<a href="meals?action=add">Add Meal</a>
-<%--<button class="button">Add</button>--%>
-<input type="button" value="Add"/>
 </body>
 </html>
 </body>
