@@ -67,6 +67,7 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete : " + id);
+                service.delete(id);
                 break;
             case "add":
             case "edit":
@@ -74,7 +75,7 @@ public class MealServlet extends HttpServlet {
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
                         service.get(getId(request));
                 request.setAttribute("meal", meal);
-                request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
+                request.getRequestDispatcher("/meals_form.jsp").forward(request, response);
                 break;
             default:
                 log.info("All meals");
