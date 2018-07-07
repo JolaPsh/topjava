@@ -24,6 +24,7 @@ public class ServiceImpl implements Service {
             meal.setId(counter.getAndIncrement());
             mapWithMeals.put(meal.getId(), meal);
         }
+        mapWithMeals.put(meal.getId(), meal);
         return meal;
     }
 

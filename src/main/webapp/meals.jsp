@@ -16,6 +16,7 @@
 <%--<jsp:include page="userform.html"></jsp:include>--%>
 
 <body>
+<section>
 <h1><a href="index.html">Home</a></h1>
 <h2>Meals</h2>
 <a href="meals?action=add">Add </a>
@@ -33,7 +34,6 @@
         <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
     <tr bgcolor="${meal.exceed ? '#cc0000' : '#009933' }">
         <td>
-                <%-- ${fn:formatDateTime(meal.dateTime)}--%>
                 ${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}
         </td>
         <td>${meal.description}</td>
@@ -45,7 +45,6 @@
     </c:forEach>
     <tbody>
 </table>
-</body>
-</html>
+</section>
 </body>
 </html>
