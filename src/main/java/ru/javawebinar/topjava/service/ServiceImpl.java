@@ -23,9 +23,10 @@ public class ServiceImpl implements Service {
         if (meal.isNew()) {
             meal.setId(counter.getAndIncrement());
             mapWithMeals.put(meal.getId(), meal);
+            return meal;
         }
-        mapWithMeals.put(meal.getId(), meal);
-        return meal;
+        return mapWithMeals.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
+
     }
 
     @Override
