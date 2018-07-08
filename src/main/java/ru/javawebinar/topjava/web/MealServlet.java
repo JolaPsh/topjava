@@ -19,9 +19,6 @@ import java.util.Objects;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
-    /*  private ConfigurableApplicationContext springContext
-              = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-      private MealRestController controller = springContext.getBean(MealRestController.class);*/
     private MealRepository repository;
 
     @Override
@@ -78,10 +75,4 @@ public class MealServlet extends HttpServlet {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
     }
-
- /*   @Override
-    public void destroy() {
-        springContext.close();
-        super.destroy();
-    }*/
 }
