@@ -8,7 +8,6 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -35,11 +34,6 @@ public class MealServiceImpl implements MealService {
     public Meal get(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.get(id), id);
     }
-
-/*    @Override
-    public Meal getByEmail(String email) throws NotFoundException {
-        return checkNotFound(repository.getByEmail(email), "email=" + email);;
-    }*/
 
     @Override
     public void update(Meal meal) {

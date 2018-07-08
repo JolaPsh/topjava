@@ -13,8 +13,6 @@ public interface MealService {
 
     Meal get(int id) throws NotFoundException;
 
-    //  Meal getByEmail(String email) throws NotFoundException;
-
     void update(Meal meal);
 
     List<Meal> getAll();

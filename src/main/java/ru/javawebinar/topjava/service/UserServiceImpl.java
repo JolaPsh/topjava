@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        return repository.save(user);
+        return null;//repository.save(user);
     }
 
     @Override
@@ -42,12 +42,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(User user) {
+        checkNotFoundWithId(repository.save(user), user.getId());
+    }
+
+    @Override
     public List<User> getAll() {
         return repository.getAll();
     }
 
-    @Override
-    public void update(User user) {
-        checkNotFoundWithId(repository.save(user), user.getId());
-    }
+
 }

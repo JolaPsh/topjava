@@ -4,10 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
-import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,21 +33,17 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         return mealRepo.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
     }
 
+    /**
+     * filter(v -> (v.getId().intValue() == id) - comparison of this kind imply that user can only delete his own meal, not everyone's
+     */
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
-        if (Integer.valueOf(id) != null) {
-            return mealRepo.values().removeIf(v -> (v.getId().intValue() == id));
-        }
-        return false;
+        return mealRepo.values().removeIf(v -> (v.getId().intValue() == id));
     }
 
     /**
-     * v.getId().intValue()==id - єто сравнение говорит о том, что еда наша, а не чужая
-     * чтобіы  юзер не мог просматривать или изменять еду чужого пользователя  --> update
-     *
-     * @param id
-     * @return
+     * filter(v -> (v.getId().intValue() == id) - comparison of this kind imply that user can only view his own meal, not everyone's
      */
     @Override
     public Meal get(int id) {
@@ -62,10 +56,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> getAll() {
         return mealRepo.values().stream()
-                //  .filter(v -> (v.getUserId().intValue() == SecurityUtil.authUserId()) && (v.getId() != null))
+                .filter(v -> (v.getId() != null))
                 .sorted(Comparator.comparing(Meal::getDate).reversed())
                 .collect(Collectors.toList());
     }
-
 }
 
