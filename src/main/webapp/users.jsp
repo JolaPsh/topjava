@@ -6,5 +6,6 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <h2>Users</h2>
+<a href="users?action=select"> Selected user</a>
 </body>
 </html>

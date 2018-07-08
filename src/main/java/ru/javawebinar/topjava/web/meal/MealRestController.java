@@ -29,16 +29,16 @@ public class MealRestController {
         return MealsUtil.getWithExceeded(service.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-    public MealWithExceed get(int id) {
+    public Meal get(int id) {
         log.info("Controller:  get: " + id);
         checkNotFoundWithId(id > 0, id);
-        return getAll().get(id);
+        return service.get(id);
     }
 
-    public MealWithExceed create(Meal meal) {
+    public Meal create(Meal meal) {
         log.info("Controller:  create: " + meal.toString());
-        checkNew(meal);
-        return get(service.create(meal).getId());
+        //   checkNew(meal);
+        return service.create(meal);
     }
 
     public void delete(int id) {

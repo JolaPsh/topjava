@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.Role;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
@@ -17,6 +19,11 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
 
 public class MealsUtil {
+
+    public static final List<User> USERS = Arrays.asList(
+            new User(1, "Sergiej", "korniz33@gmail.com", "12345678", Role.ROLE_ADMIN, Role.ROLE_USER),
+            new User(2, "Volodymyr", "kuzivdr12@gmail.com", "87654321", Role.ROLE_USER, Role.ROLE_USER)
+    );
 
     public static final List<Meal> MEALS = Arrays.asList(
             new Meal(1, LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),

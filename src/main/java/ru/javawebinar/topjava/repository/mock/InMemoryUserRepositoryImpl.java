@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,9 +22,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        userRepo.put(1, new User(1, "Sergiej", "korniz33@gmail.com", "12345678", Role.ROLE_ADMIN, Role.ROLE_USER));
-        userRepo.put(2, new User(2, "Volodymyr", "kuzivdr12@gmail.com", "87654321", Role.ROLE_USER, Role.ROLE_USER));
-
+        MealsUtil.USERS.forEach(this::save);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         log.info("getAll");
         if (userRepo.values() == null || userRepo == null) return Collections.emptyList();
         return new ArrayList<>(userRepo.values()).stream().
-                sorted(((o1, o2) -> (o1.getName().compareToIgnoreCase(o2.getName())))).
+                sorted((o1, o2) -> (o1.getName().compareToIgnoreCase(o2.getName()))).
                 collect(Collectors.toList());
     }
 }
