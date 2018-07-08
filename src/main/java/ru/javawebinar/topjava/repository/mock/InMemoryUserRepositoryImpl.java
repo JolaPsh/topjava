@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.mock;
 
+import com.sun.org.apache.bcel.internal.generic.LRETURN;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -7,15 +8,10 @@ import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-
-import static com.google.common.collect.MoreCollectors.onlyElement;
 
 
 @Repository
@@ -31,12 +27,6 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        log.info("delete {}", id);
-        return userRepo.values().removeIf(v -> v.getId().intValue() == id);
-    }
-
-    @Override
     public User save(User user) {
         log.info("save {}", user);
         if (user.isNew()) {
@@ -48,22 +38,32 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get(int id) {
-        log.info("get {}", id);
-        return userRepo.get(id);
+    public boolean delete(int id) {
+        log.info("delete {}", id);
+        return userRepo.values().removeIf(v -> v.getId().intValue() == id);
     }
 
     @Override
-    public List<User> getAll() {
-        log.info("getAll");
-        return new ArrayList<>(userRepo.values()).stream().
-                sorted(((o1, o2) -> (o1.getName().compareToIgnoreCase(o2.getName())))).
-                collect(Collectors.toList());
+    public User get(int id) {
+        log.info("get {}", id);
+        //  return userRepo.get(id);
+        return userRepo.values().stream()
+                .filter(v -> (v.getId().intValue() == id))
+                .findAny().orElse(null);
     }
 
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return userRepo.values().stream().filter(v -> v.getEmail().equalsIgnoreCase(email)).collect(onlyElement());
+        return userRepo.values().stream().filter(v -> v.getEmail().equalsIgnoreCase(email)).findAny().orElse(null);
+    }
+
+    @Override
+    public List<User> getAll() {
+        log.info("getAll");
+        if (userRepo.values() == null || userRepo == null) return Collections.emptyList();
+        return new ArrayList<>(userRepo.values()).stream().
+                sorted(((o1, o2) -> (o1.getName().compareToIgnoreCase(o2.getName())))).
+                collect(Collectors.toList());
     }
 }

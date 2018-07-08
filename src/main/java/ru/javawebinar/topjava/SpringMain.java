@@ -22,15 +22,15 @@ public class SpringMain {
         }
 
 
-      /*  System.out.println("\n" + "----------------------------------------------------------" +"\n");
+        System.out.println("\n" + "----------------------------------------------------------" + "\n");
         ConfigurableApplicationContext appCtx2 = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         System.out.println("Bean definition names: " + Arrays.toString(appCtx2.getBeanDefinitionNames()));
         MealRestController mealRestController = appCtx2.getBean(MealRestController.class);
         mealRestController.create(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
-*/
-        //  mealRestController.get(1);
-        // mealRestController.getAll();
-        //  mealRestController.create(new Meal(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "Завтрак", 500));
-        //  mealRestController.get(0);
+
+        mealRestController.get(1);
+        mealRestController.getAll();
+        mealRestController.create(new Meal(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "Завтрак", 500));
+        mealRestController.get(0);
     }
 }
