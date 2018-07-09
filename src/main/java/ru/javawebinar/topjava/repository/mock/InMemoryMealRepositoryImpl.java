@@ -55,6 +55,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll() {
+        if (mealRepo.values() == null || mealRepo == null) return Collections.emptyList();
         return mealRepo.values().stream()
                 .filter(v -> (v.getId() != null))
                 .sorted(Comparator.comparing(Meal::getDate).reversed())

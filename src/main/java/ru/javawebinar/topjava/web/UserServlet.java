@@ -24,6 +24,6 @@ public class UserServlet extends HttpServlet {
         User user = userList.get(SecurityUtil.authUserId());
 
         request.setAttribute("users", user);
-        request.getRequestDispatcher("/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 }

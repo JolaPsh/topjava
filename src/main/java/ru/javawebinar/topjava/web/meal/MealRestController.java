@@ -37,13 +37,14 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         log.info("Controller:  create: " + meal.toString());
-        //   checkNew(meal);
+        //  assureIdConsistent(meal, meal.getId()); - not finished yet
         return service.create(meal);
     }
 
     public void delete(int id) {
         log.info("Controller:  delete: " + id);
         checkNotFoundWithId(id > 0, id);
+        assureIdConsistent(service.get(id), id);
         service.delete(id);
     }
 
@@ -53,4 +54,7 @@ public class MealRestController {
         service.update(meal);
     }
 
+    public List<MealWithExceed> getByDateAndTime(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
+        return null;
+    }
 }

@@ -1,10 +1,8 @@
 package ru.javawebinar.topjava.repository.mock;
 
-import com.sun.org.apache.bcel.internal.generic.LRETURN;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -60,7 +58,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     public List<User> getAll() {
         log.info("getAll");
         if (userRepo.values() == null || userRepo == null) return Collections.emptyList();
-        return new ArrayList<>(userRepo.values()).stream().
+        return userRepo.values().stream().
                 sorted((o1, o2) -> (o1.getName().compareToIgnoreCase(o2.getName()))).
                 collect(Collectors.toList());
     }

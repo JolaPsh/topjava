@@ -22,7 +22,11 @@ public class MealsUtil {
 
     public static final List<User> USERS = Arrays.asList(
             new User(1, "Sergiej", "korniz33@gmail.com", "12345678", Role.ROLE_ADMIN, Role.ROLE_USER),
-            new User(2, "Volodymyr", "kuzivdr12@gmail.com", "87654321", Role.ROLE_USER, Role.ROLE_USER)
+            new User(2, "Volodymyr", "kuzivdr12@gmail.com", "87654321", Role.ROLE_USER, Role.ROLE_USER),
+            new User(3, "Sergiej", "korniz33@gmail.com", "12345678", Role.ROLE_ADMIN, Role.ROLE_USER),
+            new User(4, "Volodymyr", "kuzivdr12@gmail.com", "87654321", Role.ROLE_USER, Role.ROLE_USER),
+            new User(5, "Sergiej", "korniz33@gmail.com", "12345678", Role.ROLE_ADMIN, Role.ROLE_USER),
+            new User(5, "Volodymyr", "kuzivdr12@gmail.com", "87654321", Role.ROLE_USER, Role.ROLE_USER)
     );
 
     public static final List<Meal> MEALS = Arrays.asList(
@@ -52,6 +56,10 @@ public class MealsUtil {
         System.out.println(getFilteredWithExceededByCycle(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
         System.out.println(getFilteredWithExceededInOnePass(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
         System.out.println(getFilteredWithExceededInOnePass2(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
+
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        List<MealWithExceed> listFilteredByCycle = getFilteredWithExceededByCycle(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        listFilteredByCycle.forEach(System.out::println);
     }
 
     public static List<MealWithExceed> getWithExceeded(Collection<Meal> meals, int caloriesPerDay) {
@@ -88,7 +96,7 @@ public class MealsUtil {
 
         final List<MealWithExceed> mealsWithExceeded = new ArrayList<>();
         meals.forEach(meal -> {
-            if (DateTimeUtil.isBetween(meal.getTime(), startTime, endTime)) {
+            if (DateTimeUtil.isBetweenDateOrTime(meal.getTime(), startTime, endTime)) {
                 mealsWithExceeded.add(createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
             }
         });
