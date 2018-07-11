@@ -1,21 +1,12 @@
-.custom-select {
-    border: 1px solid #ccc;
-    width: 120px;
-    border-radius: 3px;
-    overflow: hidden;
-    background: snow;
-}
-
-.custom-select select {
-    padding: 5px 8px;
-    width: 130%;
+button {
+    background-color: #008CBA;
     border: none;
-    box-shadow: none;
-    background: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-}
-
-.custom-select select:focus {
-    outline: none;
+    color: white;
+    padding: 12px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }

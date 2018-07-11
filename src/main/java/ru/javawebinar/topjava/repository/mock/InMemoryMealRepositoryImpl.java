@@ -34,30 +34,32 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     /**
-     * filter(v -> (v.getId().intValue() == id) - comparison of this kind imply that user can only delete his own meal, not everyone's
+     * (v.getId().intValue() == id) - comparison of this kind imply that meal exists
+     * (v.getUserId().intValue() ==userId) - comparison of this kind imply that user can only delete his own meal, not other
      */
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id, int userId) {
         log.info("delete {}", id);
-        return mealRepo.values().removeIf(v -> (v.getId().intValue() == id));
+        return mealRepo.values().removeIf(v -> (v.getId().intValue() == id) && (v.getUserId().intValue() == userId));
     }
 
     /**
-     * filter(v -> (v.getId().intValue() == id) - comparison of this kind imply that user can only view his own meal, not everyone's
+     * (v.getId().intValue() == id) - comparison of this kind imply that meal exists
+     * (v.getUserId().intValue() ==userId) - comparison of this kind imply that user can only delete his own meal, not other
      */
     @Override
-    public Meal get(int id) {
+    public Meal get(int id, int userId) {
         log.info("get {}", id);
         return mealRepo.values().stream()
-                .filter(v -> (v.getId().intValue() == id))
+                .filter(v -> (v.getId().intValue() == id) && (v.getUserId().intValue() == userId))
                 .findAny().orElse(null);
     }
 
     @Override
-    public List<Meal> getAll() {
+    public List<Meal> getAll(int userId) {
         if (mealRepo.values() == null || mealRepo == null) return Collections.emptyList();
         return mealRepo.values().stream()
-                .filter(v -> (v.getId() != null))
+                .filter(v -> (v.getId() != null) && (v.getUserId().intValue() == userId))
                 .sorted(Comparator.comparing(Meal::getDate).reversed())
                 .collect(Collectors.toList());
     }

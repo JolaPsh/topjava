@@ -5,14 +5,22 @@
 </head>
 <link rel="stylesheet" type="text/css" href="style.css">
 <body>
+<script type="text/javascript">
+    function switchOnUser() {
+        window.location = "meals.jsp"
+    }
+</script>
 <h3>Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h3>
 <hr>
-<div class="custom-select">
-    <select>
-        <option value="0">0</option>
+<form method="get" action="meals">
+    <select name="userId">
+        <option value="" selected>Choose your id</option>
         <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
     </select>
-</div>
+    <button type="button" onclick="switchOnUser()">Go</button>
+</form>
 <ul>
     <li><a href="users">Users</a></li>
     <li><a href="meals">Meals</a></li>

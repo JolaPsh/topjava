@@ -9,7 +9,7 @@ public class ValidationUtil {
         return checkNotFound(object, "id=" + id);
     }
 
-    // if meal with such id doesn't exist
+    //  meal with such id doesn't exist
     public static void checkNotFoundWithId(boolean found, int id) {
         checkNotFound(found, "id=" + id);
     }
@@ -31,7 +31,7 @@ public class ValidationUtil {
         }
     }
 
-    // meal doesn't belong to particular user
+    // meal doesn't belong to a particular user
     public static void assureIdConsistent(AbstractBaseEntity entity, int id) {
 //      http://stackoverflow.com/a/32728226/548473
         if (entity.isNew()) {
