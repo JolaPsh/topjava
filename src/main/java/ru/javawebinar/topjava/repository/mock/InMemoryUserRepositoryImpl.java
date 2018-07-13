@@ -37,15 +37,13 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
-        return userRepo.values().removeIf(v -> v.getId().intValue() == id);
+        return userRepo.remove(id) != null;
     }
 
     @Override
     public User get(int id) {
         log.info("get {}", id);
-        return userRepo.values().stream()
-                .filter(v -> (v.getId().intValue() == id))
-                .findAny().orElse(null);
+        return userRepo.get(id);
     }
 
     @Override

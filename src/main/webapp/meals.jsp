@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
-<%--
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
---%>
+
 <html>
 <head>
     <title>Meal list</title>
@@ -12,39 +10,34 @@
 </head>
 <body>
 <h3><a href="index.html">Home</a></h3>
-<form method="post" action="meals?action=all">
-    <div class=wrapper>
-        <div class="header">
-            <h4>My meal</h4>
-            <p> Filter by date / time</p>
+<form method="post" action="meals?action=filter">
+    <div class="header">
+        <h4>My meal</h4>
+        <p> Filter by date / time</p>
+    </div>
+    <div class="data-inputs">
+        <div class="col-1">
+            <dl>
+                <dt>From date:</dt>
+                <dd><input type="date" value="${param.startDate}" name="start-date"></dd>
+            </dl>
+            <dl>
+                <dt>To date:</dt>
+                <dd><input type="date" value="${param.endDate}" name="end-date"/></dd>
+            </dl>
         </div>
-        <div class="data-inputs">
-            <div class="col-1">
-                <dl>
-                    <dt>From date:</dt>
-                    <dd><input type="date" value="${param.startDate}" name="start-date"></dd>
-                </dl>
-                <dl>
-                    <dt>To date:</dt>
-                    <dd><input type="date" value="${param.endDate}" name="end-date"/></dd>
-                </dl>
-            </div>
-            <div class="col-2">
-                <dl>
-                    <dt>From time:</dt>
-                    <dd><input type="time" value="${param.startTime}" name="start-time"/></dd>
-                </dl>
-                <dl>
-                    <dt>To time:</dt>
-                    <dd><input type="time" value="${param.endTime}" name="end-time"/></dd>
-                </dl>
-            </div>
-        </div>
-        <div class="form-buttons">
-            <button onclick="window.history.back()" type="button">Cancel</button>
-            <button type="submit">Filter</button>
+        <div class="col-2">
+            <dl>
+                <dt>From time:</dt>
+                <dd><input type="time" value="${param.startTime}" name="start-time"/></dd>
+            </dl>
+            <dl>
+                <dt>To time:</dt>
+                <dd><input type="time" value="${param.endTime}" name="end-time"/></dd>
+            </dl>
         </div>
     </div>
+    <button type="submit">Filter</button>
 </form>
 
 <h2>Meals</h2>

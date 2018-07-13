@@ -34,11 +34,9 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        String userId = request.getParameter("id");
         String action = request.getParameter("action");
         if (action == null) {
-            final Meal meal = new Meal(Integer.valueOf(userId),
-                    LocalDateTime.parse(request.getParameter("dateTime")),
+            final Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
                     request.getParameter("description"),
                     Integer.valueOf(request.getParameter("calories")));
 
@@ -50,6 +48,13 @@ public class MealServlet extends HttpServlet {
                 controller.update(meal, getId(request));
             }
             response.sendRedirect("meals");
+        } else if (action.equals("filter")) {
+            LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("start-date"));
+            LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("start-time"));
+            LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("end-date"));
+            LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("end-time"));
+            request.setAttribute("meals", controller.getAllByDateOrTime(startDate, startTime, endDate, endTime));
+            request.getRequestDispatcher("/meals.jsp").forward(request, response);
         }
     }
 
@@ -77,11 +82,7 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
-                LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("start-date"));
-                LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("start-time"));
-                LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("end-date"));
-                LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("end-time"));
-                request.setAttribute("meals", controller.getAllByDateOrTime(startDate, startTime, endDate, endTime));
+                request.setAttribute("meals", controller.getAll());
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }

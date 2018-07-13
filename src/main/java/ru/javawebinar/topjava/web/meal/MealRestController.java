@@ -7,17 +7,17 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
-import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
-import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
+import static ru.javawebinar.topjava.web.SecurityUtil.authUserCaloriesPerDay;
 
 
 @Controller
@@ -29,43 +29,41 @@ public class MealRestController {
 
     public List<MealWithExceed> getAll() {
         log.info("Controller: all");
-        return MealsUtil.getWithExceeded(service.getAll(authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY);
+        return MealsUtil.getWithExceeded(service.getAll(authUserId()), authUserCaloriesPerDay());
     }
 
     public Meal get(int id) {
         log.info("Controller:  get: " + id);
-        checkNotFoundWithId(id > 0, id);
         return service.get(id, authUserId());
     }
 
     public Meal create(Meal meal) {
-        log.info("Controller:  create: " + meal.toString());
-        //  assureIdConsistent(meal, meal.getId()); - not finished yet
-        return service.create(meal);
+        log.info("Controller:  create: " + meal);
+        checkNew(meal);
+        return service.create(meal, authUserId());
     }
 
     public void delete(int id) {
         log.info("Controller:  delete: " + id);
-        checkNotFoundWithId(id > 0, id);
-        assureIdConsistent(service.get(id, authUserId()), id);
         service.delete(id, authUserId());
     }
 
     public void update(Meal meal, int id) {
-        log.info("Controller:  update: " + meal.toString());
+        log.info("Controller:  update: " + meal);
         assureIdConsistent(meal, id);
-        service.update(meal);
+        service.update(meal, authUserId());
     }
 
     public List<MealWithExceed> getAllByDateOrTime(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
-        return MealsUtil.getWithExceeded(service.getAll(authUserId()), MealsUtil.DEFAULT_CALORIES_PER_DAY).stream()
-                .filter(v -> DateTimeUtil.isBetweenDateOrTime(v.getDateTime().toLocalDate(),
-                        startDate != null ? startDate : LocalDate.MIN,
-                        endDate != null ? endDate : LocalDate.MAX))
-                .filter(v -> DateTimeUtil.isBetweenDateOrTime(v.getDateTime().toLocalTime(),
-                        startTime != null ? startTime : LocalTime.MIN,
-                        endTime != null ? endTime : LocalTime.MAX))
-                .collect(Collectors.toList());
+        List<Meal> mealList = service.getBetweenDates(
+                startDate != null ? startDate : LocalDate.MIN,
+                endDate != null ? endDate : LocalDate.MAX,
+                authUserId());
+
+        return MealsUtil.getFilteredWithExceeded(mealList,
+                startTime != null ? startTime : LocalTime.MIN,
+                endTime != null ? endTime : LocalTime.MAX,
+                SecurityUtil.authUserCaloriesPerDay());
 
     }
 }

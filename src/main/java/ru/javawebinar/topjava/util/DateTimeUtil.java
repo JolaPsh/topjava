@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.Temporal;
 
 public class DateTimeUtil {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -14,19 +13,10 @@ public class DateTimeUtil {
     public static boolean isBetween(LocalTime lt, LocalTime startTime, LocalTime endTime) {
         return lt.compareTo(startTime) >= 0 && lt.compareTo(endTime) <= 0;
     }
+
     // generic date-time utill
-    public static boolean isBetweenDateOrTime(Temporal dt, Temporal startDt, Temporal endDt) {
-        if (startDt instanceof LocalDate && endDt instanceof LocalDate) {
-            LocalDate date = LocalDate.from(dt);
-            LocalDate sDate = LocalDate.from(startDt);
-            LocalDate eDate = LocalDate.from(endDt);
-            return date.compareTo(sDate) >= 0 && date.compareTo(eDate) <= 0;
-        } else {
-            LocalTime time = LocalTime.from(dt);
-            LocalTime sTime = LocalTime.from(startDt);
-            LocalTime eTime = LocalTime.from(endDt);
-            return time.compareTo(sTime) >= 0 && time.compareTo(eTime) <= 0;
-        }
+    public static <T extends Comparable<? super T>> boolean isBetween(T value, T start, T end) {
+        return value.compareTo(start) >= 0 && value.compareTo(end) <= 0;
     }
 
     public static LocalDate parseLocalDate(String str) {
