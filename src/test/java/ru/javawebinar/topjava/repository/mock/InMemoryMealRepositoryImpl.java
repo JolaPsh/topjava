@@ -52,7 +52,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         return meals.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
     }
 
-/*    @PostConstruct
+    @PostConstruct
     public void postConstruct() {
         log.info("+++ PostConstruct");
     }
@@ -60,7 +60,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @PreDestroy
     public void preDestroy() {
         log.info("+++ PreDestroy");
-    }*/
+    }
 
     @Override
     public boolean delete(int id, int userId) {
