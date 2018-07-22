@@ -95,7 +95,7 @@ public class MealServiceTest {
         service.update(MEAL1, ADMIN_ID);
         log.info(String.format("Execution time of updateNotFound() method: %d", stopwatch.runtime(TimeUnit.MILLISECONDS)));
     }
-
+  
     @Test
     public void getAll() throws Exception {
         assertMatch(service.getAll(USER_ID), MEALS);
