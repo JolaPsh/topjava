@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class JpaMealRepositoryImpl implements MealRepository {
 
     @PersistenceContext
@@ -32,7 +32,6 @@ public class JpaMealRepositoryImpl implements MealRepository {
             return em.merge(meal);
         }
     }
-
 
     @Override
     @Transactional
