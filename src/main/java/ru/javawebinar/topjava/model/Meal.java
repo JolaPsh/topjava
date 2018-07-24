@@ -1,8 +1,5 @@
 package ru.javawebinar.topjava.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.FetchType;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -34,8 +31,7 @@ public class Meal extends AbstractBaseEntity {
     @NotNull
     private int calories;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(/*name = "user_id",*/ nullable = false, referencedColumnName = "id")
     @NotNull
     private User user;
 
@@ -93,13 +89,24 @@ public class Meal extends AbstractBaseEntity {
         this.user = user;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "Meal{" +
                 "id=" + id +
                 ", dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                ", user=" + user +
+                ", id=" + id +
                 '}';
     }
 }
