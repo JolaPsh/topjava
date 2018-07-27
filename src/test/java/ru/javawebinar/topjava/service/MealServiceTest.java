@@ -30,23 +30,23 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class MealServiceTest extends TestCase {
+public class MealServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
+
+    private static StringBuilder builder = new StringBuilder();
+
     @Rule
-    public final ExpectedException thrown = ExpectedException.none();
+    public ExpectedException thrown = ExpectedException.none();
     @Rule
     public TestName testName = new TestName();
+
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {
-        private void logInfo(Description description, long nanos) {
-            log.info(String.format("Execution time of %s method() is %d ms",
-                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos)));
-        }
-
         @Override
         protected void finished(long nanos, Description description) {
-            logInfo(description, nanos);
+            log.info(builder.append(String.format("Execution time of %s method() is %d ms \n",
+                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos))).toString());
         }
     };
 
@@ -63,10 +63,10 @@ public class MealServiceTest extends TestCase {
         assertMatch(service.getAll(USER_ID), MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteNotFound() throws Exception {
-        service.delete(MEAL1_ID, 1);
         thrown.expect(NotFoundException.class);
+        service.delete(MEAL1_ID, 1);
     }
 
     @Test
@@ -82,10 +82,10 @@ public class MealServiceTest extends TestCase {
         assertMatch(actual, ADMIN_MEAL1);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getNotFound() throws Exception {
-        service.get(MEAL1_ID, ADMIN_ID);
         thrown.expect(NotFoundException.class);
+        service.get(MEAL1_ID, ADMIN_ID);
     }
 
     @Test
@@ -95,10 +95,10 @@ public class MealServiceTest extends TestCase {
         assertMatch(service.get(MEAL1_ID, USER_ID), updated);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void updateNotFound() throws Exception {
-        service.update(MEAL1, ADMIN_ID);
         thrown.expect(NotFoundException.class);
+        service.update(MEAL1, ADMIN_ID);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class MealServiceTest extends TestCase {
     }
 
     @AfterClass
-    public static void afterClass() {
-        log.info("temporary stub");
+    public static void resume() {
+        log.info(builder.toString());
     }
 }

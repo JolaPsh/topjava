@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
+import static ru.javawebinar.topjava.util.Util.isBetween;
 
 public class MealsUtil {
 

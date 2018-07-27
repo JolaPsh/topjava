@@ -8,14 +8,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@SuppressWarnings("JpaQlInspection")
 @NamedQueries({
         @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id AND m.user.id=:userId"),
         @NamedQuery(name = Meal.GET_ALL, query = "SELECT m FROM Meal m JOIN FETCH m.user WHERE m.user.id=:userId ORDER BY m.dateTime DESC"),
-        @NamedQuery(name = Meal.GET_ALL_BETWEEN, query = "SELECT m FROM Meal m JOIN FETCH m.user WHERE m.user.id=:userId AND m.dateTime BETWEEN :startDate AND :endDate ORDER BY m.dateTime DESC"),
+        @NamedQuery(name = Meal.GET_ALL_BETWEEN, query = "SELECT m FROM Meal m WHERE m.user.id=:userId AND m.dateTime BETWEEN :startDate AND :endDate ORDER BY m.dateTime DESC"),
 })
 @Entity
 @Table(name = "meals",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"date_time", "user_id"}, name = "meals_unique_user_datetime_idx")})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
 
     public static final String DELETE = "Meal.delete";
@@ -31,7 +32,7 @@ public class Meal extends AbstractBaseEntity {
     @NotNull
     private int calories;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(/*name = "user_id",*/ nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     @NotNull
     private User user;
 
@@ -89,7 +90,7 @@ public class Meal extends AbstractBaseEntity {
         this.user = user;
     }
 
-/*    @Override
+    @Override
     public String toString() {
         return "Meal{" +
                 "id=" + id +
@@ -97,16 +98,8 @@ public class Meal extends AbstractBaseEntity {
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
                 '}';
-    }*/
-
-    @Override
-    public String toString() {
-        return "Meal{" +
-                "dateTime=" + dateTime +
-                ", description='" + description + '\'' +
-                ", calories=" + calories +
-                ", user=" + user +
-                ", id=" + id +
-                '}';
     }
+
+
 }
+
