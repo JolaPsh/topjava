@@ -29,14 +29,10 @@ import static org.slf4j.LoggerFactory.getLogger;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringRunner.class)
-
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-
-/*@ActiveProfiles(Profiles.POSTGRES_DB)*/
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public abstract class AbstractServiceTest {
     private static final Logger log = getLogger("result");
-
     private static StringBuilder results = new StringBuilder();
 
     @Rule
