@@ -32,7 +32,6 @@ public class MealServlet extends HttpServlet {
         springContext = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"});
         mealController = springContext.getBean(MealRestController.class);
         config.getServletContext().setInitParameter("spring.profiles.active", Profiles.HSQL_DB);
-        //  springContext.getEnvironment().setActiveProfiles(Profiles.HSQL_DB, Profiles.POSTGRES_DB);
     }
 
     @Override
