@@ -1,7 +1,9 @@
 package ru.javawebinar.topjava;
 
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.MealWithExceed;
@@ -30,5 +32,18 @@ public class SpringMain {
                             LocalDate.of(2015, Month.MAY, 31), LocalTime.of(11, 0));
             filteredMealsWithExceeded.forEach(System.out::println);
         }
+        //  AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+        ctx.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.HSQL_DB);
+        ctx.load("spring/spring-app.xml", "spring/mock.xml");
+        ctx.refresh();
+
+        System.out.println("Bean definition names: " + Arrays.toString(ctx.getBeanDefinitionNames()));
+        MealRestController mealController = ctx.getBean(MealRestController.class);
+        mealController.get(100004);
+
+        ctx.close();
+
+
     }
 }
