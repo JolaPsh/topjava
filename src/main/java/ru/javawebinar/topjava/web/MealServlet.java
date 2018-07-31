@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.web;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -29,9 +28,8 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        springContext = new ClassPathXmlApplicationContext(new String[]{"spring/spring-app.xml", "spring/spring-db.xml"});
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         mealController = springContext.getBean(MealRestController.class);
-        config.getServletContext().setInitParameter("spring.profiles.active", Profiles.HSQL_DB);
     }
 
     @Override
