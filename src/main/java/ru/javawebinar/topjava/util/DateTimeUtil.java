@@ -28,4 +28,8 @@ public class DateTimeUtil {
     public static LocalTime parseLocalTime(String str) {
         return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
     }
+
+    public static <T extends Comparable<? super T>> boolean isBetween(T value, T start, T end) {
+        return value.compareTo(start) >= 0 && value.compareTo(end) <= 0;
+    }
 }
