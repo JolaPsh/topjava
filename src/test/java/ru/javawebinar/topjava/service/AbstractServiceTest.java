@@ -8,6 +8,8 @@ import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -34,6 +36,9 @@ import static org.slf4j.LoggerFactory.getLogger;
 public abstract class AbstractServiceTest {
     private static final Logger log = getLogger("result");
     private static StringBuilder results = new StringBuilder();
+
+    @Autowired
+    public Environment env;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

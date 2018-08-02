@@ -1,49 +1,31 @@
 package ru.javawebinar.topjava;
 
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
-import java.util.List;
+
+import static java.time.LocalDateTime.of;
+import static ru.javawebinar.topjava.MealTestData.MEAL1;
+import static ru.javawebinar.topjava.MealTestData.MEAL1_ID;
 
 public class SpringMain {
     public static void main(String[] args) {
-        // java 7 Automatic resource management
-        try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/mock.xml")) {
-            System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-            AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
-            adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
-            System.out.println();
-
-            MealRestController mealController = appCtx.getBean(MealRestController.class);
-            List<MealWithExceed> filteredMealsWithExceeded =
-                    mealController.getBetween(
-                            LocalDate.of(2015, Month.MAY, 30), LocalTime.of(7, 0),
-                            LocalDate.of(2015, Month.MAY, 31), LocalTime.of(11, 0));
-            filteredMealsWithExceeded.forEach(System.out::println);
-        }
-        //  AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
-        ctx.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.HSQL_DB);
-        ctx.load("spring/spring-app.xml", "spring/mock.xml");
+        ctx.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.DATAJPA);
+        ctx.load("spring/spring-app.xml", "spring/spring-db.xml");
         ctx.refresh();
 
         System.out.println("Bean definition names: " + Arrays.toString(ctx.getBeanDefinitionNames()));
+        AdminRestController adminUserController = ctx.getBean(AdminRestController.class);
+        adminUserController.getByMail("user@yandex.ru");
+
         MealRestController mealController = ctx.getBean(MealRestController.class);
-        mealController.get(100004);
-
+        mealController.getAll();
         ctx.close();
-
 
     }
 }

@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository;
 
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface UserRepository {
     User getByEmail(String email);
 
     List<User> getAll();
+
+    default List<Meal> getUserByIdWithMeal(int userId) {
+        throw new UnsupportedOperationException();
+    }
 }
