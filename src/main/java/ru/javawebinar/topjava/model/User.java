@@ -16,6 +16,9 @@ import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 public class User extends AbstractNamedEntity {
 
+    public static final String DELETE = "User.delete";
+    public static final String BY_EMAIL = "User.getByEmail";
+    public static final String ALL_SORTED = "User.getAllSorted";
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
