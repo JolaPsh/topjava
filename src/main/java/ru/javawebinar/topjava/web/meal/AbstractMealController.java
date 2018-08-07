@@ -41,7 +41,7 @@ public abstract class AbstractMealController {
         mealService.delete(id, userId);
     }
 
-    public void update(Meal meal) {
+    public void update(Meal meal, int id) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", meal, userId);
         mealService.update(meal, userId);
@@ -60,6 +60,9 @@ public abstract class AbstractMealController {
         List<Meal> listWithExceed = mealService.getBetweenDates(
                 startDate != null ? startDate : DateTimeUtil.MIN_DATE,
                 endDate != null ? endDate : DateTimeUtil.MAX_DATE, userId);
-        return MealsUtil.getFilteredWithExceeded(listWithExceed, startTime, endTime, SecurityUtil.authUserCaloriesPerDay());
+        return MealsUtil.getFilteredWithExceeded(listWithExceed,
+                startTime != null ? startTime : LocalTime.MIN,
+                endTime != null ? endTime : LocalTime.MAX,
+                SecurityUtil.authUserCaloriesPerDay());
     }
 }
