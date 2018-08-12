@@ -56,7 +56,7 @@ public abstract class AbstractMealController {
         return mealService.getAll(userId);
     }
 
-    public List<MealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
+    public List<MealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate,  LocalTime endTime) {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates and time for user {}", startDate, endDate, startTime, endTime, userId);
 
