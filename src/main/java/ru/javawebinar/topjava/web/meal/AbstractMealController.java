@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
+
 /**
  * Created by Joanna Pakosh on Авг., 2018
  */
@@ -44,6 +46,7 @@ public abstract class AbstractMealController {
     public void update(Meal meal, int id) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} for user {}", meal, userId);
+        assureIdConsistent(meal, id);
         mealService.update(meal, userId);
     }
 
