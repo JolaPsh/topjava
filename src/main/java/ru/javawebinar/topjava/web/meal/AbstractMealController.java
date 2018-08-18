@@ -69,8 +69,8 @@ public abstract class AbstractMealController {
         List<Meal> mealsDateFiltered = service.getBetweenDates(
                 orElse(startDate, DateTimeUtil.MIN_DATE), orElse(endDate, DateTimeUtil.MAX_DATE), userId);
 
-        return MealsUtil.getFilteredWithExceeded(mealsDateFiltered, SecurityUtil.authUserCaloriesPerDay(),
-                orElse(startTime, LocalTime.MIN), orElse(endTime, LocalTime.MAX)
+        return MealsUtil.getFilteredWithExceeded(mealsDateFiltered,
+                orElse(startTime, LocalTime.MIN), orElse(endTime, LocalTime.MAX), SecurityUtil.authUserCaloriesPerDay()
         );
     }
 }
