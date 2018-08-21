@@ -41,7 +41,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(contentJson(MEAL1))
+                .andExpect(contentJsonObject(MEAL1))
         );
     }
 
@@ -69,6 +69,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     void testGetAll() throws Exception {
         TestUtil.print(mockMvc.perform(get(REST_URL))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJsonArray(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1)));
     }
@@ -98,7 +99,6 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .content(writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isOk());
-
         assertMatch(mealService.get(MEAL1_ID, authUserId()), updated);
     }
 
@@ -106,16 +106,16 @@ public class MealRestControllerTest extends AbstractControllerTest {
     void testUpdateNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
                 mealService.get(MEAL1_ID + 14, authUserId()));
-
     }
 
     @Test
     void testGetBetween() throws Exception {
-        TestUtil.print(mockMvc.perform(get(REST_URL)
-                .param("startDate", "2015-05-30T10:07:00")
-                .param("endDate", "2015-05-30T10:12:00"))
+        mockMvc.perform(get(REST_URL + "filter")
+                .param("startDate", "2015-05-30").param("startTime", "07:00")
+                .param("endDate", "2015-05-30").param("endTime", "12:00"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)));
-        //   .andExpect(contentJson(MEAL1)));
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJsonArray(MEAL1));
     }
 }

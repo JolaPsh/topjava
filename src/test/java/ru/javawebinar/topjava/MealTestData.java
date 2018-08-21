@@ -53,7 +53,7 @@ public class MealTestData {
         return content().json(writeIgnoreProps(Arrays.asList(expected)));
     }
 
-    public static ResultMatcher contentJson(Meal expected) {
+    public static ResultMatcher contentJsonObject(Meal expected) {
         return content().json(writeIgnoreProps(expected));
     }
 }
