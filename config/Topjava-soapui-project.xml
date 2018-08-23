@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="Topjava" resourceRoot="" soapui-version="5.4.0"
+<con:soapui-project activeEnvironment="Default environment" name="Topjava" resourceRoot="" soapui-version="5.4.0"
                     abortOnError="false" runType="SEQUENTIAL" id="b6a174fe-9cda-4410-af25-bdf04e1fed39"
+                    encryptionMode="Not encrypted" updated="2.4.0 2018-06-08T12:50:23Z"
                     xmlns:con="http://eviware.com/soapui/config">
     <con:settings/>
     <con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02"
                    name="http://localhost:8080" type="rest" id="eebe6f3c-c045-444a-ae8f-c0f4bbb345b5"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <con:settings/>
-        <con:definitionCache/>
+        <con:definitionCache type="TEXT" rootPart=""/>
         <con:endpoints>
             <con:endpoint>http://localhost:8080</con:endpoint>
         </con:endpoints>
@@ -400,9 +401,18 @@
             </con:method>
         </con:resource>
     </con:interface>
+    <con:savedRecentRuns>1</con:savedRecentRuns>
     <con:properties/>
     <con:wssContainer/>
+    <con:databaseConnectionContainer/>
+    <con:jmsConnectionContainer/>
     <con:oAuth2ProfileContainer/>
     <con:oAuth1ProfileContainer/>
+    <con:reporting>
+        <con:xmlTemplates/>
+        <con:parameters/>
+    </con:reporting>
     <con:sensitiveInformation/>
+    <con:authRepository/>
+    <con:tags/>
 </con:soapui-project>
