@@ -48,12 +48,4 @@ public class MealTestData {
     public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
     }
-
-    public static ResultMatcher contentJsonArray(Meal... expected) {
-        return content().json(writeIgnoreProps(Arrays.asList(expected)));
-    }
-
-    public static ResultMatcher contentJsonObject(Meal expected) {
-        return content().json(writeIgnoreProps(expected));
-    }
 }
