@@ -33,6 +33,10 @@ function updateTable() {
     });
 }
 
+function updateTableByData(data) {
+    datatableApi.clear().rows.add(data).draw();
+}
+
 function save() {
     var form = $("#detailsForm");
     $.ajax({
