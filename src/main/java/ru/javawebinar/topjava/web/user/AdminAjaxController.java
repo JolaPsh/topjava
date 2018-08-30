@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.web.user;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Role;
@@ -34,5 +33,11 @@ public class AdminAjaxController extends AbstractUserController {
         if (user.isNew()) {
             super.create(user);
         }
+    }
+
+    @Override
+    @PostMapping("/{id}")
+    public void enable(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
+        super.enable(id, enabled);
     }
 }
