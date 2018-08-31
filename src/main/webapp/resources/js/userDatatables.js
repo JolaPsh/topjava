@@ -15,6 +15,9 @@ function enable(chkbox, id) {
     });
 }
 
+function updateTable() {
+    $.get(ajaxUrl, updateTableByData);
+}
 // $(document).ready(function () {
 $(function () {
     datatableApi = $("#datatable").DataTable({

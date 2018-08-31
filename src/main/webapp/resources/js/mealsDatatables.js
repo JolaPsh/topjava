@@ -1,7 +1,7 @@
 var ajaxUrl = "ajax/profile/meals/";
 var datatableApi;
 
-function filterTable() {
+function updateTable() {
     $.ajax({
         type: "GET",
         url: ajaxUrl + "filter",
@@ -16,7 +16,7 @@ function resetFilter() {
 }
 
 $(function () {
-    datatableApi = $('#datatable').DataTable({
+    datatableApi = $("#datatable").DataTable({
         "paging": false,
         "info": true,
         "columns": [{

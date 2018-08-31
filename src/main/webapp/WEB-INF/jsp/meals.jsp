@@ -27,14 +27,15 @@
                         <label for="endTime" class="col-form-label"><spring:message code="meal.endTime"/></label>
                         <input type="time" class="form-control" name="endTime" id="endTime">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="filterTable()">
+                </form>
+                <button class="btn btn-primary" onclick="updateTable()">
+                    <span class="fa fa-filter"></span>
                         <spring:message code="meal.filter"/>
                     </button>
-                    <button type="button" class="btn btn-danger" onclick="resetFilter()">
+                <button class="btn btn-danger" onclick="resetFilter()">
                         <span class="fa fa-remove"></span>
                         <spring:message code="common.cancel"/>
                     </button>
-                </form>
             </div>
             <hr>
             <button class="btn btn-primary" onclick="add()">
