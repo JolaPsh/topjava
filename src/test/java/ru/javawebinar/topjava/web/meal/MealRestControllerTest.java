@@ -16,9 +16,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.javawebinar.topjava.MealTestData.assertMatch;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.TestUtil.*;
-import static ru.javawebinar.topjava.UserTestData.USER;
+import static ru.javawebinar.topjava.UserTestData.*;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 class MealRestControllerTest extends AbstractControllerTest {
@@ -27,6 +28,13 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private MealService service;
+
+    @Test
+    public void testGetUnAuth() throws Exception {
+        mockMvc.perform(get(REST_URL))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
 
     @Test
     void testGet() throws Exception {
@@ -39,9 +47,9 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + MEAL1_ID).with(userHttpBasic(USER)))
+        mockMvc.perform(delete(REST_URL + MEAL1_ID)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isNoContent());
-        assertMatch(service.getAll(START_SEQ), MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
     }
 
     @Test

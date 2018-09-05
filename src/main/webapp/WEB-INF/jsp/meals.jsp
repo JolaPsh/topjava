@@ -5,7 +5,6 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
-<link rel="stylesheet" href="webjars/datetimepicker/2.3.4/jquery.datetimepicker.css">
 <script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
 <script type="text/javascript" src="resources/js/mealDatatables.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
@@ -123,6 +122,7 @@
     i18n["addTitle"] = '<spring:message code="meal.add"/>';
     i18n["editTitle"] = '<spring:message code="meal.edit"/>';
     <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved", "common.errorStatus"}%>'>
+    i18n["${key}"] = "<spring:message code="${key}"/>";
     </c:forEach>
 </script>
 </html>
