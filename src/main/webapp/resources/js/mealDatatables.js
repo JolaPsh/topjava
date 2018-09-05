@@ -60,4 +60,14 @@ $(function () {
         },
         "initComplete": makeEditable
     });
+
+    $('#startDate, #endDate').datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d'
+    });
+
+    $('#startTime, #endTime').datetimepicker({
+        datepicker: false,
+        format: 'H:m'
+    });
 });

@@ -5,6 +5,7 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
+<link rel="stylesheet" href="webjars/datetimepicker/2.3.4/jquery.datetimepicker.css">
 <script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
 <script type="text/javascript" src="resources/js/mealDatatables.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
@@ -21,22 +22,22 @@
                             <div class="form-group">
                                 <label class="col-form-label" for="startDate"><spring:message
                                         code="meal.startDate"/></label>
-                                <input class="form-control col-6" type="date" name="startDate" id="startDate">
+                                <input class="form-control col-6" name="startDate" id="startDate">
 
                                 <label class="col-form-label" for="endDate"><spring:message
                                         code="meal.endDate"/></label>
-                                <input class="form-control col-6" type="date" name="endDate" id="endDate">
+                                <input class="form-control col-6" name="endDate" id="endDate">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label class="col-form-label" for="startTime"><spring:message
                                         code="meal.startTime"/></label>
-                                <input class="form-control col-6" type="time" name="startTime" id="startTime">
+                                <input class="form-control col-6" name="startTime" id="startTime">
 
                                 <label class="col-form-label" for="endTime"><spring:message
                                         code="meal.endTime"/></label>
-                                <input class="form-control col-6" type="time" name="endTime" id="endTime">
+                                <input class="form-control col-6" name="endTime" id="endTime">
                             </div>
                         </div>
                     </div>
@@ -122,7 +123,6 @@
     i18n["addTitle"] = '<spring:message code="meal.add"/>';
     i18n["editTitle"] = '<spring:message code="meal.edit"/>';
     <c:forEach var="key" items='<%=new String[]{"common.deleted","common.saved", "common.errorStatus"}%>'>
-    i18n["${key}"] = "<spring:message code="${key}"/>";
     </c:forEach>
 </script>
 </html>
