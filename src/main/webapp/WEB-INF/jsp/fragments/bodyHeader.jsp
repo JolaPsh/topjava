@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <fmt:setBundle basename="messages.app"/>
-<nav class="navbar navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark py-0">
     <div class="container">
         <a href="meals" class="navbar-brand"><img src="resources/images/icon-meal.png"> <spring:message
                 code="app.title"/></a>
