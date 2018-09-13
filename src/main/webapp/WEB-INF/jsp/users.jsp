@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -41,7 +42,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="detailsForm">
+                <form:form class="form-horizontal" method="post" id="detailsForm">
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
@@ -61,7 +62,7 @@
                         <input type="password" class="form-control" id="password" name="password"
                                placeholder="<spring:message code="user.password"/>">
                     </div>
-                </form>
+                </form:form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
